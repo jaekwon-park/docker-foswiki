@@ -18,25 +18,16 @@ RUN a2dismod mpm_event && \
     ln -sf /dev/stdout /var/log/apache2/access.log && \
     ln -sf /dev/stderr /var/log/apache2/error.log
 
-RUN wget -O /tmp/Foswiki-2.1.4.tgz https://downloads.sourceforge.net/project/foswiki/foswiki/2.1.4/Foswiki-2.1.4.tgz && \
-    tar xvfz /tmp/Foswiki-2.1.4.tgz -C /var/www/html/ && \
-    mv /var/www/html/Foswiki-2.1.4/* /var/www/html/ && \
-    rm -rf /var/www/html/Foswiki-2.1.4/ && \
-    apt-get purge -y wget && apt-get autoremove -y
-
 COPY foswiki.conf /etc/apache2/sites-available/
 
 RUN a2ensite foswiki.conf && \
     a2dissite 000-default.conf
 
 COPY apache2-foreground /usr/local/bin/
-COPY pre-configure /usr/local/bin/
 
 RUN  /usr/local/bin/pre-configure
 
 EXPOSE 80
-VOLUME /foswiki/data
-VOLUME /foswiki/pub
 WORKDIR /var/www/html
 
 CMD ["apache2-foreground"]
