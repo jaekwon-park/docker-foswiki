@@ -25,8 +25,6 @@ RUN a2ensite foswiki.conf && \
 
 COPY apache2-foreground /usr/local/bin/
 
-RUN  /usr/local/bin/pre-configure
-
 EXPOSE 80
 WORKDIR /var/www/html
 
