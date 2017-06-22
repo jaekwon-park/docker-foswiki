@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# CONF_INSTALL_PATH
 # CONF_URL
 # CONF_PASSWD
 # CONF_PLUGIN
+CONF_INSTALL_PATH=/var/www/html
 
 PERL_PATH=$(type -p perl)
 
-cd $CONF_INSTALL_PATH  || return 255
+cd $CONF_INSTALL_PATH 
 $PERL_PATH -CA ./tools/configure -save -noprompt -wizard Plugins
 $PERL_PATH -CA ./tools/configure -save -set {DefaultUrlHost}=$CONF_URL
 $PERL_PATH -CA ./tools/configure -save -set {Password}=$CONF_PASSWD
