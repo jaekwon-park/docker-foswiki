@@ -21,7 +21,8 @@ RUN a2dismod mpm_event && \
 RUN wget -O /tmp/Foswiki-2.1.4.tgz https://downloads.sourceforge.net/project/foswiki/foswiki/2.1.4/Foswiki-2.1.4.tgz && \
     tar xvfz /tmp/Foswiki-2.1.4.tgz /var/www/html/ && \
     mv /var/www/html/Foswiki-2.1.4/* /var/www/html/ && \
-    rm -rf /var/www/html/Foswiki-2.1.4/
+    rm -rf /var/www/html/Foswiki-2.1.4/ && \
+    apt-get purge wget && apt-get autoremove 
 
 COPY foswiki.conf /etc/apache2/sites-available/
 
