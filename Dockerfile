@@ -29,16 +29,14 @@ COPY foswiki.conf /etc/apache2/sites-available/
 RUN a2ensite foswiki.conf && \
     a2dissite 000-default.conf
 
-WORKDIR /var/www/html
-
 COPY apache2-foreground /usr/local/bin/
 COPY pre-configure /usr/local/bin/
 
-EXPOSE 80
-RUN mkdir -p /foswiki/pub /foswiki/data
-VOLUME /foswiki/pub
-VOLUME /foswiki/data
-
 RUN  /usr/local/bin/pre-configure
+
+EXPOSE 80
+VOLUME /var/www/html/pub
+VOLUME /var/www/html/data
+WORKDIR /var/www/html
 
 CMD ["apache2-foreground"]

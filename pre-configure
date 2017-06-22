@@ -7,17 +7,33 @@ CONF_INSTALL_PATH=/var/www/html
 
 PERL_PATH=$(type -p perl)
 
-cd $CONF_INSTALL_PATH 
-$PERL_PATH -CA ./tools/configure -save -noprompt -wizard Plugins
-$PERL_PATH -CA ./tools/configure -save -set {DefaultUrlHost}=$CONF_URL
-$PERL_PATH -CA ./tools/configure -save -set {Password}=$CONF_PASSWD
+if [ $(mount | grep /var/www/html/data | wc -l) -eq 1 ]
+then
+	if [ -z  /var/www/html/data/_default ] 
+	then
+	cd $CONF_INSTALL_PATH 
+		$PERL_PATH -CAS ./tools/configure -save -noprompt 
+		$PERL_PATH -CAS ./tools/configure -save -set {DefaultUrlHost}=$CONF_URL
+		$PERL_PATH -CAS ./tools/configure -save -set {ScriptUrlPath}='/bin' 
+		$PERL_PATH -CAS ./tools/configure -save -set {ScriptUrlPaths}{view}='' 
+		$PERL_PATH -CAS ./tools/configure -save -set {PubUrlPath}='/pub' 
+		$PERL_PATH -CAS ./tools/configure -save -set {Password}=$CONF_PASSWD
+	fi
 
+	for i in $CONF_PLUGIN
+	do
+		$PERL_PATH ./tools/extension_installer $i -a install
+	done
+fi
 
-for i in $CONF_PLUGIN
-do
-	$PERL_PATH ./tools/extension_installer $i -a install
-done
+cp root-htaccess.txt .htaccess
+cp bin-htaccess-basic.txt bin/.htaccess
+cp pub-htaccess.txt pub/.htaccess
+cp subdir-htaccess.txt data/.htaccess
+cp subdir-htaccess.txt lib/.htaccess
+cp subdir-htaccess.txt locale/.htaccess
+cp subdir-htaccess.txt templates/.htaccess
+cp subdir-htaccess.txt tools/.htaccess
+cp subdir-htaccess.txt working/.htaccess
 
 chown -R www-data:www-data $CONF_INSTALL_PATH
-chown -R www-data:www-data /foswiki/data
-chown -R www-data:www-data /foswiki/pub
