@@ -35,8 +35,9 @@ COPY apache2-foreground /usr/local/bin/
 COPY pre-configure /usr/local/bin/
 
 EXPOSE 80
-VOLUME /var/www/html/pub
-VOLUME /var/www/html/data
+RUN mkdir -p /foswiki/pub /foswiki/data
+VOLUME /foswiki/pub
+VOLUME /foswiki/data
 
 RUN  /usr/local/bin/pre-configure
 
