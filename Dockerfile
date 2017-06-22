@@ -36,7 +36,12 @@ RUN a2ensite foswiki.conf && \
 WORKDIR /var/www/html
 
 COPY apache2-foreground /usr/local/bin/
+COPY pre-configure /usr/local/bin/
 
 EXPOSE 80
+VOLUME /var/www/html/pub
+VOLUME /var/www/html/data
+
+RUN  /usr/local/bin/pre-configure
 
 CMD ["apache2-foreground"]

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# CONF_INSTALL_PATH
+# CONF_URL
+# CONF_PASSWD
+# CONF_PLUGIN
+
+PERL_PATH=$(type -p perl)
+
+cd $CONF_INSTALL_PATH  || return 255
+$PERL_PATH -CA ./tools/configure -save -noprompt -wizard Plugins
+$PERL_PATH -CA ./tools/configure -save -set {DefaultUrlHost}=$CONF_URL
+$PERL_PATH -CA ./tools/configure -save -set {Password}=$CONF_PASSWD
+
+
+for i in $CONF_PLUGIN
+do
+	$PERL_PATH ./tools/extension_installer $i -a install
+done
+
+chown -R www-data:www-data $CONF_INSTALL_PATH
