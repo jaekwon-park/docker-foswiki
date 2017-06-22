@@ -22,7 +22,7 @@ RUN wget -O /tmp/Foswiki-2.1.4.tgz https://downloads.sourceforge.net/project/fos
     tar xvfz /tmp/Foswiki-2.1.4.tgz -C /var/www/html/ && \
     mv /var/www/html/Foswiki-2.1.4/* /var/www/html/ && \
     rm -rf /var/www/html/Foswiki-2.1.4/ && \
-    apt-get purge wget && apt-get autoremove 
+    apt-get purge -y wget && apt-get autoremove -y
 
 COPY foswiki.conf /etc/apache2/sites-available/
 
