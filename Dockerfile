@@ -7,8 +7,9 @@ RUN LC_ALL=C.UTF-8
 RUN apt-get -y update && C_ALL=C DEBIAN_FRONTEND=noninteractive apt-get -y install \
     apache2 rcs \
     libdbd-mysql-perl  libapache2-request-perl  libfcgi-perl libfcgi-procmanager-perl \
-    perl-modules-5.22 libalgorithm-diff-perl libauthen-sasl-perl libcgi-pm-perl libcgi-session-perl libcrypt-passwdmd5-perl libdigest-sha-perl libemail-mime-perl libencode-perl liberror-perl libfile-copy-recursive-perl libhtml-parser-perl libhtml-tree-perl libio-socket-ip-perl libio-socket-ssl-perl libjson-perl liblocale-maketext-lexicon-perl liblocale-msgfmt-perl libwww-perl liblwp-protocol-https-perl liburi-perl libversion-perl libnet-ldap-perl \
-    apt-get clean && rm -r /var/lib/apt/lists/*
+    perl-modules-5.22 libalgorithm-diff-perl libauthen-sasl-perl libcgi-pm-perl libcgi-session-perl libcrypt-passwdmd5-perl libdigest-sha-perl libemail-mime-perl libencode-perl liberror-perl libfile-copy-recursive-perl libhtml-parser-perl libhtml-tree-perl libio-socket-ip-perl libio-socket-ssl-perl libjson-perl liblocale-maketext-lexicon-perl liblocale-msgfmt-perl libwww-perl liblwp-protocol-https-perl liburi-perl libversion-perl libnet-ldap-perl && \
+    apt-get clean && \
+    rm -r /var/lib/apt/lists/*
 
 # Configure apache module
 RUN chown -R www-data:www-data /var/www/html/
